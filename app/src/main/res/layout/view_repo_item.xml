@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+
+        <TextView
+            android:id="@+id/repoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            tools:text="Repo Name"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/repoDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textColor="@android:color/black"
+            tools:text="Repo Description"
+            android:textSize="15sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/repoName"/>
+
+
+        <ImageView
+            android:id="@+id/imgOwner"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:src="@drawable/ic_launcher_background"
+            android:layout_margin="20dp"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/repoOwnerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textColor="@android:color/black"
+            tools:text="Repo Owner Name"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/imgOwner"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="22dp"/>
+
+        <ImageView
+            android:id="@+id/ic_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_start"
+            android:layout_toEndOf="@+id/repoOwnerName"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="22dp"
+            android:layout_marginStart="30dp"
+            />
+
+        <TextView
+            android:id="@+id/numberOfStarts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ic_start"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="22dp"
+            tools:text="Number Of starts" />
+
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
+
