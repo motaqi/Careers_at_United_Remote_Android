@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="3dp"
-    android:foreground="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -34,8 +28,10 @@
             android:layout_height="wrap_content"
             android:textStyle="normal"
             android:textColor="@android:color/black"
+            android:layout_above="@id/imgOwner"
             tools:text="Repo Description"
-            android:textSize="15sp"
+            android:ellipsize="end"
+            android:textSize="12sp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_below="@id/repoName"/>
@@ -82,7 +78,7 @@
             android:layout_marginBottom="22dp"
             tools:text="Number Of starts" />
 
-        <view
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@android:color/darker_gray"

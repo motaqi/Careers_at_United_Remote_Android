@@ -33,7 +33,7 @@ public class RepositoriesListPresenter {
 
                     @Override
                     public void onNext(RepositoryResponse repositoryResponse) {
-                        repositoriesListView.setRepositoriesList(repositoryResponse.getRepositories());
+                        repositoriesListView.setRepositoriesList(repositoryResponse);
                     }
 
                     @Override

@@ -1,5 +1,7 @@
 package com.example.careersatunitedremote.model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -250,6 +252,7 @@ public class RepositoryResponse {
         private Integer openIssuesCount;
         @SerializedName("license")
         @Expose
+        @Nullable
         private License license;
         @SerializedName("forks")
         @Expose

@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface RepositoriesListView {
 
-    void setRepositoriesList(List<RepositoryResponse.Repository> repositories);
+    void setRepositoriesList(RepositoryResponse repositoryResponse);
     void showLoading();
     void hideLoading();
     void onError(String message);
+
 
 }
