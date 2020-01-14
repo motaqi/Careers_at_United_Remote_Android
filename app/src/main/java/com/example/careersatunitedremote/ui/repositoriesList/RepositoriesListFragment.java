@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.example.careersatunitedremote.R;
 import com.example.careersatunitedremote.adapter.RepositoriesListFragmentAdapter;
+import com.example.careersatunitedremote.helper.EndlessRecyclerViewScrollListener;
 import com.example.careersatunitedremote.model.RepositoryResponse;
 
 import java.util.List;
@@ -30,6 +31,12 @@ import butterknife.ButterKnife;
 public class RepositoriesListFragment extends Fragment implements RepositoriesListView{
 
     private RepositoriesListPresenter repositoriesListPresenter;
+    private LinearLayoutManager linearLayoutManager;
+    private List<RepositoryResponse.Repository> repositoryList;
+    private RepositoriesListFragmentAdapter repositoriesListFragmentAdapter;
+
+    private static final int PAGE_START = 1;
+    public static final String DATE_QUERY="created:>2017-10-22";
 
     // UI Variables
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
@@ -45,25 +52,40 @@ public class RepositoriesListFragment extends Fragment implements RepositoriesLi
         View rootView = inflater.inflate(R.layout.fragment_repositories_list, container, false);
         ButterKnife.bind(this, rootView);
         repositoriesListPresenter = new RepositoriesListPresenter(getContext(), this);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        loadMoreListener();
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        repositoriesListPresenter.getRepositoriesList("created:>2017-10-22", 1);
+        repositoriesListPresenter.getRepositoriesList(DATE_QUERY, PAGE_START);
+
+    }
+
+    private void loadMoreListener() {
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                repositoriesListPresenter.loadMore(DATE_QUERY, page);
+            }
+        });
     }
 
     @Override
     public void setRepositoriesList(RepositoryResponse repositoryResponse) {
-       for (RepositoryResponse.Repository repository: repositoryResponse.getRepositories()){
-           Log.d("REPOS", "setRepositoriesList: "+repository.getFullName());
-       }
-
-        RepositoriesListFragmentAdapter repositoriesListFragmentAdapter = new RepositoriesListFragmentAdapter(repositoryResponse, getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        repositoryList = repositoryResponse.getRepositories();
+        repositoriesListFragmentAdapter = new RepositoriesListFragmentAdapter(repositoryList, getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setClipToPadding(false);
         recyclerView.setAdapter(repositoriesListFragmentAdapter);
+        repositoriesListFragmentAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadMore(List<RepositoryResponse.Repository> repositories) {
+        repositoryList.addAll(repositories);
         repositoriesListFragmentAdapter.notifyDataSetChanged();
     }
 
@@ -79,6 +101,6 @@ public class RepositoriesListFragment extends Fragment implements RepositoriesLi
 
     @Override
     public void onError(String message) {
-        Log.d("REPOERROR", "onError: "+message);
+        progressBar.setVisibility(View.GONE);
     }
 }

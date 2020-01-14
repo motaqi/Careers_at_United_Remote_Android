@@ -20,9 +20,9 @@ public class RepositoriesListPresenter {
         this.repositoriesListView = repositoriesListView;
     }
 
-    void getRepositoriesList(String date,int page){
+    void getRepositoriesList(String dateQuery,int page){
         repositoriesListView.showLoading();
-        ApiManager.getInstance().getRepository(date, page)
+        ApiManager.getInstance().getRepository(dateQuery, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RepositoryResponse>() {
@@ -34,6 +34,35 @@ public class RepositoriesListPresenter {
                     @Override
                     public void onNext(RepositoryResponse repositoryResponse) {
                         repositoriesListView.setRepositoriesList(repositoryResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        repositoriesListView.onError(e.getLocalizedMessage());
+                        repositoriesListView.hideLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        repositoriesListView.hideLoading();
+                    }
+                });
+    }
+
+    void loadMore(String dateQuery,int page){
+        repositoriesListView.showLoading();
+        ApiManager.getInstance().getRepository(dateQuery, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RepositoryResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(RepositoryResponse repositoryResponse) {
+                        repositoriesListView.loadMore(repositoryResponse.getRepositories());
                     }
 
                     @Override

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.careersatunitedremote.R;
 import com.example.careersatunitedremote.model.RepositoryResponse;
+import com.example.careersatunitedremote.util.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,12 +22,12 @@ import butterknife.ButterKnife;
 
 public class RepositoriesListFragmentAdapter extends RecyclerView.Adapter<RepositoriesListFragmentAdapter.RepositoriesViewHolder>{
 
-    private RepositoryResponse repositoryResponse;
+    private List<RepositoryResponse.Repository> repositoryList;
     private Context context;
 
 
-    public RepositoriesListFragmentAdapter(RepositoryResponse repositoryResponse, Context context){
-        this.repositoryResponse = repositoryResponse;
+    public RepositoriesListFragmentAdapter(List<RepositoryResponse.Repository> repositoryList, Context context){
+        this.repositoryList = repositoryList;
         this.context = context;
     }
 
@@ -40,20 +41,25 @@ public class RepositoriesListFragmentAdapter extends RecyclerView.Adapter<Reposi
 
     @Override
     public void onBindViewHolder(@NonNull RepositoriesViewHolder holder, int position) {
-        String RepoName = repositoryResponse.getRepositories().get(position).getName()!=null?repositoryResponse.getRepositories().get(position).getName():"";
+        String RepoName = repositoryList.get(position).getName()!=null?repositoryList.get(position).getName():"";
         holder.repsName.setText(RepoName);
-        String RepoDesc = repositoryResponse.getRepositories().get(position).getDescription()!= null? repositoryResponse.getRepositories().get(position).getDescription(): "";
+        String RepoDesc = repositoryList.get(position).getDescription()!= null? repositoryList.get(position).getDescription(): "";
         holder.repoDesc.setText(RepoDesc);
-        String RepoOwnerName = repositoryResponse.getRepositories().get(position).getOwner().getLogin()!= null? repositoryResponse.getRepositories().get(position).getOwner().getLogin():"";
+        String RepoOwnerName = repositoryList.get(position).getOwner().getLogin()!= null? repositoryList.get(position).getOwner().getLogin():"";
         holder.repoOwnerName.setText(RepoOwnerName);
-        int StartsNumber = repositoryResponse.getRepositories().get(position).getStargazersCount()!= null ? repositoryResponse.getRepositories().get(position).getStargazersCount():0;
-        holder.startsNumber.setText(String.valueOf(StartsNumber));
-        Picasso.get().load(repositoryResponse.getRepositories().get(position).getOwner().getAvatarUrl()).into(holder.imageOwner);
+        int StartsNumber = repositoryList.get(position).getStargazersCount()!= null ? repositoryList.get(position).getStargazersCount():0;
+        holder.startsNumber.setText(Utils.formattingNumber(StartsNumber));
+        Picasso.get().load(repositoryList.get(position).getOwner().getAvatarUrl()).into(holder.imageOwner);
     }
 
     @Override
     public int getItemCount() {
-       return repositoryResponse.getRepositories().size();
+        if (repositoryList!= null){
+            return repositoryList.size();
+        }else {
+            return 0;
+        }
+
     }
 
     static class RepositoriesViewHolder extends RecyclerView.ViewHolder {

@@ -1,1 +1,21 @@
 Challenge path: https://github.com/hiddenfounders/mobile-coding-challenge
+
+This Project of Android application that show in RecyclerView The most starred Github repos that were created in the last 30 days.
+
+Features :
+----------
+-listing the most starred Github repos that were created in the last 30 days.
+-Repository name
+-Repository description
+-Numbers of stars for the repo.
+-Username and avatar of the owner.
+-Pagination to show more data when Scrolling down Getting data from the server using Github API : https://developer.github.com/v3/search/#search-repositories
+
+We are Using in this Project the following libraries:
+-------------------------------------------------
+- Retrofit: https://square.github.io/retrofit/
+- GSON: https://github.com/codepath/android_guides/wiki/Consuming-APIs-with-Retrofit
+- RxJava: https://github.com/ReactiveX/RxJava
+- RxAndroid: https://github.com/ReactiveX/RxAndroid
+- butter knife: https://jakewharton.github.io/butterknife/
+- OkHttp: https://square.github.io/okhttp/
